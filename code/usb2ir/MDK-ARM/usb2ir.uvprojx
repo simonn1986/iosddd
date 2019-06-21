@@ -10,6 +10,7 @@
       <TargetName>usb2ir</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
+      <pCCUsed>5060750::V5.06 update 6 (build 750)::ARMCC</pCCUsed>
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -417,6 +418,11 @@
               <FileName>stm32f1xx_hal_msp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Src/stm32f1xx_hal_msp.c</FilePath>
+            </File>
+            <File>
+              <FileName>ir_control.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\ir_control.c</FilePath>
             </File>
           </Files>
         </Group>

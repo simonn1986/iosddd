@@ -21,7 +21,8 @@
 #include "usart.h"
 
 /* USER CODE BEGIN 0 */
-
+#include "string.h"
+#include "ir_control.h"
 /* USER CODE END 0 */
 
 UART_HandleTypeDef huart1;
@@ -178,7 +179,56 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 } 
 
 /* USER CODE BEGIN 1 */
+void uart1_printf(uint8_t *data, uint16_t len)
+{
+	for(uint16_t i = 0; i < len; i++)
+	{
+		HAL_UART_Transmit(&huart1,data+i,1,0xFFFF);
+	}		
+}
 
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+	uint8_t rx_len;
+	char RxBuffer_uart[256];
+	
+  if (huart == &huart1)
+	{
+    rx_len = strlen((const char*)huart1.pRxBuffPtr);
+    memcpy(RxBuffer_uart, (const char*)huart1.pRxBuffPtr, rx_len);
+    memset(huart1.pRxBuffPtr, 0, RX1_BUFFER_SIZE);
+    HAL_UART_Receive_IT(&huart1, huart1.pRxBuffPtr, RX1_BUFFER_SIZE);
+	}
+  else if (huart == &huart2)
+	{
+    rx_len = strlen((const char*)huart2.pRxBuffPtr);
+    memcpy(RxBuffer_uart, (const char*)huart2.pRxBuffPtr, rx_len);
+		if((RxBuffer_uart[0] == 0xAA)&&(RxBuffer_uart[1] == 0x09))
+		{
+			switch(RxBuffer_uart[2])
+			{
+				case 1: set_ir_ID(RxBuffer_uart[3]);
+					break;
+				case 2: set_CMD_powerswitch(RxBuffer_uart[3]);
+					break;		
+				case 3: set_CMD_mode(RxBuffer_uart[3]);
+					break;
+				case 4: set_CMD_temperature(RxBuffer_uart[3]);
+					break;
+				case 5: set_CMD_windspeed(RxBuffer_uart[3]);
+					break;
+				case 6: set_CMD_verticalswitch(RxBuffer_uart[3]);
+					break;		
+				case 7: set_init_data(RxBuffer_uart[3], RxBuffer_uart[4], RxBuffer_uart[5]);
+					break;					
+				defult:
+					break;				
+			}
+		}
+    memset(huart2.pRxBuffPtr, 0, RX2_BUFFER_SIZE);
+    HAL_UART_Receive_IT(&huart2, huart2.pRxBuffPtr, RX2_BUFFER_SIZE);
+	}	
+}
 /* USER CODE END 1 */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

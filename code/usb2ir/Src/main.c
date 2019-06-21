@@ -91,7 +91,8 @@ int main(void)
   MX_USART1_UART_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-
+	HAL_UART_Receive_IT(&huart1, huart1.pRxBuffPtr, RX1_BUFFER_SIZE); 
+	HAL_UART_Receive_IT(&huart2, huart2.pRxBuffPtr, RX2_BUFFER_SIZE); 
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -101,6 +102,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+		HAL_Delay(1000);
   }
   /* USER CODE END 3 */
 }
