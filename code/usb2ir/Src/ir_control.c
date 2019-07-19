@@ -205,3 +205,18 @@ void study_ir_CMD(uint8_t addr)
     sendbuf[4]=sendbuf[0]^sendbuf[1]^sendbuf[2]^sendbuf[3];
     uart1_printf(sendbuf,5);
 }
+
+void send_study_ir(uint8_t addr)
+{
+    uint8_t sendbuf[5];
+    if(addr>0x3e)
+    {
+        addr=0x3e;
+    }
+    sendbuf[0]=0x86;
+    sendbuf[1]=addr; 
+    sendbuf[2]=0x00;
+    sendbuf[3]=0x00;
+    sendbuf[4]=sendbuf[0]^sendbuf[1]^sendbuf[2]^sendbuf[3];
+    uart1_printf(sendbuf,5);
+}

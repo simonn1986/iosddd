@@ -14,5 +14,7 @@ void set_CMD_windspeed(uint8_t cmd);
 void set_CMD_verticalswitch(uint8_t cmd);
 void set_init_data(uint8_t mode,uint8_t wind,uint8_t temperature);
 void study_ir_CMD(uint8_t addr);
+void send_study_ir(uint8_t addr);
+
 
 #endif 

@@ -222,6 +222,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 				case 7: set_init_data(RxBuffer_uart[3], RxBuffer_uart[4], RxBuffer_uart[5]);
 					break;		
 				case 8: study_ir_CMD(RxBuffer_uart[3]);
+					break;	
+				case 9: send_study_ir(RxBuffer_uart[3]);
 					break;					
 				defult:
 					break;				
